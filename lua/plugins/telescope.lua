@@ -150,8 +150,8 @@ return {
             ["<a-h>"] = find_files_with_hidden,
             ["<C-Down>"] = actions.cycle_history_next,
             ["<C-Up>"] = actions.cycle_history_prev,
-            ["<C-f>"] = actions.preview_scrolling_down,
-            ["<C-b>"] = actions.preview_scrolling_up,
+            -- ["<C-f>"] = actions.preview_scrolling_down,
+            -- ["<C-b>"] = actions.preview_scrolling_up,
           },
           n = {
             ["q"] = actions.close,

@@ -1,7 +1,7 @@
 return {
   -- by enabling the lazy option, the plugin will automatically be lazy loaded
   -- until it's module is called for example require("tokyonight")
-  { "folke/tokyonight.nvim", lazy = true },
+
 
   -- this plugin will be loaded when using `:ZenMode`
   { "folke/zen-mode.nvim", cmd = "ZenMode" },

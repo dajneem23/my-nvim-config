@@ -1,6 +1,6 @@
 return {
   "catppuccin/nvim", 
-  lazy = false, -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+  lazy = true, -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
   name = "catppuccin", 
   priority = 1001,
   config = function()

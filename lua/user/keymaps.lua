@@ -64,6 +64,31 @@ vim.keymap.set("n", "<leader><Tab>", function()
     vim.cmd("wincmd l") -- go right to main editor
   end
 end, { desc = "Toggle focus between Neo-tree and editor" })
+-- Toggle focus between vvim-tree and main editor
+-- Toggle focus between neo-tree and editor, or open neo-tree if it's closed
+vim.keymap.set("n", "<M-Tab>", function()
+  local current_win = vim.api.nvim_get_current_win()
+  local neo_tree_win = nil
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "neo-tree" then
+      neo_tree_win = win
+      break
+    end
+  end
+
+  if neo_tree_win then -- if neo-tree is open
+    if current_win == neo_tree_win then -- and focused
+      vim.cmd("wincmd p") -- focus previous window (editor)
+    else -- and not focused
+      vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
+    end
+  else
+    require("nvim-tree.api").tree.focus() -- jump to tree
+    -- if neo-tree is not open, open it
+    -- require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
+  end
+end, { desc = "Toggle focus Neo-tree/editor" })
 -- https://github.com/bugb/dotfiles/blob/main/.config/nvim/core/options.lua
 -- Keys notation table:
 -- https://neovim.io/doc/user/intro.html#key-notation
@@ -173,7 +198,15 @@ map('n', '<S-Up>', 'yyddkP', defaults)
 map('n', '<S-Down>', 'yyddp', defaults)
 
 -- Keymaps for Nvim tree
-map('n', '<leader>e', ':NvimTreeToggle<cr>', defaults)
+-- map('n', '<leader>e', ':NvimTreeToggle<cr>', defaults)
+-- Toggle tree with Ctrl+n
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+
+-- Jump back to the tree with Ctrl+n
+-- vim.keymap.set("n", "<C-n>", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
+
+-- map('n', '<leader>v', '<C-w>p', defaults) -- Jump back from tree to editor
+-- map('n', '<leader>l', '<C-w>l', defaults)
 map('n', '<C-Left>', '<C-w><Left>', defaults)
 map('n', '<C-Right>', '<C-w><Right>', defaults)
 
@@ -203,3 +236,26 @@ end, { desc = "Command Palette (like VS Code)" })
 
 vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
 vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment (visual)" })
+
+vim.keymap.set('n', '<leader>rt', function()
+  local cwd = vim.fn.getcwd()
+  local open_cmd = "open -a iTerm '" .. cwd .. "'"  -- macOS with iTerm
+  -- local open_cmd = "gnome-terminal --working-directory='" .. cwd .. "'" -- Linux
+  vim.fn.system(open_cmd)
+end, { noremap = true, silent = true })
+
+
+local treeApi = require("nvim-tree.api")
+
+-- Collapse all: Option + c
+vim.keymap.set('n', '<M-c>', function()
+  treeApi.tree.focus()
+  treeApi.tree.collapse_all()
+end, { noremap = true, silent = true, desc = "NvimTree: Collapse All" })
+
+
+-- Expand all: Option + o
+vim.keymap.set('n', '<M-o>', function()
+  treeApi.tree.focus()
+  treeApi.tree.expand_all()
+end, { noremap = true, silent = true, desc = "NvimTree: Expand All" })
