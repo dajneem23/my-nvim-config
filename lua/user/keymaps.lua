@@ -3,7 +3,8 @@ local map = vim.keymap.set
 local set = vim.opt
 local defaults = { noremap = true, silent = true }
 local telescope = require("telescope.builtin")
--- Telescope
+local wk = require("which-key")
+
 
 -- vim.keymap.set("n", "<leader>p", telescope.find_files, { desc = "Find files" })
 -- vim.keymap.set("n", "<leader>f", telescope.live_grep, { desc = "Live grep" })
@@ -122,11 +123,11 @@ map("n", " ", "<Nop>", { silent = true, remap = false })
 
 
 -- Using <leader> + number (1, 2, ... 9) to switch tab
-for i=1,9,1
-do
-  map('n', '<leader>'..i, i.."gt", {})
-end
-map('n', '<leader>0', ":tablast<cr>", {})
+-- for i=1,9,1
+-- do
+--   map('n', '<leader>'..i, i.."gt", {})
+-- end
+-- map('n', '<leader>0', ":tablast<cr>", {})
 
 
 -- map for quick quit, save files using leader key
@@ -160,9 +161,9 @@ map('n', 'c', '"_c', {})
 -- map('n', 'r', 'd', {})
 
 -- scrolling
-map('n', ',', '<C-u>', defaults)
-map('n', 'm', '<C-d>', defaults)
-map('n', 'M', 'm', defaults)
+-- map('n', ',', '<C-u>', defaults)
+-- map('n', 'm', '<C-d>', defaults)
+-- map('n', 'M', 'm', defaults)
 
 -- Insert empty line without entering insert mode
 map('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', defaults)
@@ -259,3 +260,47 @@ vim.keymap.set('n', '<M-o>', function()
   treeApi.tree.focus()
   treeApi.tree.expand_all()
 end, { noremap = true, silent = true, desc = "NvimTree: Expand All" })
+
+
+vim.keymap.set('n', '<leader>1', '<Cmd>BufferLineGoToBuffer 1<CR>', {})
+vim.keymap.set('n', '<leader>2', '<Cmd>BufferLineGoToBuffer 2<CR>', {})
+vim.keymap.set('n', '<leader>3', '<Cmd>BufferLineGoToBuffer 3<CR>', {})
+vim.keymap.set('n', '<leader>4', '<Cmd>BufferLineGoToBuffer 4<CR>', {}) 
+vim.keymap.set('n', '<leader>5', '<Cmd>BufferLineGoToBuffer 5<CR>', {})
+--buffer last
+vim.keymap.set('n', '<leader>0', '<Cmd>BufferLineGoToBuffer -1<CR>', {})
+-- from tree to previous buffer
+vim.keymap.set('n', '<leader>p', '<Cmd>BufferLineGoToBuffer -1<CR>', { desc = "Go to previous buffer" })
+
+
+--https://github.com/alextricity25/nvim_weekly_plugin_configs/blob/01b77d3f41a2c429d397f37a2901e40b47bd6507/lua/keymappings.lua
+local function visual_cursors_with_delay()
+  -- Execute the vm-visual-cursors command.
+  vim.cmd('silent! execute "normal! \\<Plug>(VM-Visual-Cursors)"')
+  -- Introduce delay via VimScript's 'sleep' (set to 500 milliseconds here).
+  vim.cmd('sleep 200m')
+  -- Press 'A' in normal mode after the delay.
+  vim.cmd('silent! execute "normal! A"')
+end
+
+
+wk.register({
+  m = {
+    name = "Visual Multi",
+    a = { "<Plug>(VM-Select-All)<Tab>", "Select All", mode = { "n" } },
+    r = { "<Plug>(VM-Start-Regex-Search)", "Start Regex Search", mode = { "n" } },
+    p = { "<Plug>(VM-Add-Cursor-At-Pos)", "Add Cursor At Pos", mode = { "n" } },
+    v = { visual_cursors_with_delay, "Visual Cursors", mode = { "v" } },
+    o = { "<Plug>(VM-Toggle-Mappings)", "Toggle Mapping", mode = { "n" } },
+    d = { "<Plug>(VM-Select-Next-Occurrence)", "Select Next Occurrence", mode = { "n" } },
+    D = { "<Plug>(VM-Select-Previous-Occurrence)", "Select Previous Occurrence", mode = { "n" } },
+    c = { "<Plug>(VM-Select-Current-Word)", "Select Current Word", mode = { "n" } },
+    s = { "<Plug>(VM-Select-Next-Character)", "Select Next Character", mode = { "n" } },
+    S = { "<Plug>(VM-Select-Previous-Character)", "Select Previous Character", mode = { "n" } },
+    i = { "<Plug>(VM-Select-Next-Inner-Word)", "Select Next Inner Word", mode = { "n" } },
+    I = { "<Plug>(VM-Select-Previous-Inner-Word)", "Select Previous Inner Word", mode = { "n" } },
+    l = { "<Plug>(VM-Select-Next-Line)", "Select Next Line", mode = { "n" } },
+    L = { "<Plug>(VM-Select-Previous-Line)", "Select Previous Line", mode = { "n" } },
+    
+  }
+}, { prefix = "<leader>" })

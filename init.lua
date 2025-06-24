@@ -30,3 +30,6 @@ require "polish"
 
 
 require("user.keymaps")
+
+--This tells Neovim to capture mouse scroll instead of passing it to the terminal.
+vim.o.mouse = "a"
