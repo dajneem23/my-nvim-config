@@ -1,8 +1,24 @@
 ---@diagnostic disable: missing-fields
 return {
-  -- lsp servers
   {
     "neovim/nvim-lspconfig",
+  dependencies = {
+      -- main one
+      { "ms-jpq/coq_nvim", branch = "coq" },
+  
+      -- 9000+ Snippets
+      { "ms-jpq/coq.artifacts", branch = "artifacts" },
+  
+      -- lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+      -- Need to **configure separately**
+      { 'ms-jpq/coq.thirdparty', branch = "3p" },
+      -- - shell repl
+      -- - nvim lua api
+      -- - scientific calculator
+      -- - comment banner
+      -- - etc
+
+    },
     opts = {
       diagnostics = { virtual_text = { prefix = "icons" } },
       capabilities = {
@@ -52,8 +68,46 @@ return {
             },
           },
         },
+        rust_analyzer = {},
+        ts_ls = {
+          -- single_file_support = true,
+          settings = {
+            tsserver = {
+              fileOperations = {
+                watchOptions = {
+                  watchFile = "useFsEvents",
+                  watchDirectory = "useFsEvents",
+                },
+              },
+            },
+          },
+        },
       },
     },
+    	config = function() -- for help on nvim options go to :h vim.lsp.buf
+			local lspconfig = require("lspconfig")
+			lspconfig.ts_ls.setup({
+				-- capabilities =  require("cmp_nvim_lsp").default_capabilities(),
+			})
+			lspconfig.rust_analyzer.setup({
+        --TODO: fix cmp_nvim_lsp
+				-- capabilities =  require("cmp_nvim_lsp").default_capabilities(),
+				settings = {
+					["rust-analyzer"] = {
+						-- Other Settings ...
+						procMacro = {
+							ignored = {
+								leptos_macro = {
+									-- optional: --
+									-- "component",
+									"server",
+								},
+							},
+						},
+					},
+				},
+			})
+		end,
   },
 
   {

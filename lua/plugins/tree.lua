@@ -5,7 +5,7 @@ return {
   config = function()
     require("nvim-tree").setup({
       filters = {
-        custom = { "^.git$", "node_modules" }, -- folders to hide
+        custom = { "^.git$"}, -- folders to hide
       },
     })
   end

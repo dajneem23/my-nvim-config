@@ -42,29 +42,29 @@ vim.keymap.set("n", "<leader>B", "<C-i>", { desc = "Jump forward" })
 
 
 -- Toggle file explorer
-vim.keymap.set("n", "<leader>e", function()
-  require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
-end, { desc = "Toggle file explorer" })
+-- vim.keymap.set("n", "<leader>e", function()
+--   require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
+-- end, { desc = "Toggle file explorer" })
 
 -- Toggle focus between Neo-tree and main editor
-vim.keymap.set("n", "<leader><Tab>", function()
-  local current = vim.api.nvim_get_current_win()
-  local neo_tree_win = nil
+-- vim.keymap.set("n", "<leader><Tab>", function()
+--   local current = vim.api.nvim_get_current_win()
+--   local neo_tree_win = nil
 
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
-    if bufname:match("neo%-tree") then
-      neo_tree_win = win
-      break
-    end
-  end
+--   for _, win in ipairs(vim.api.nvim_list_wins()) do
+--     local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
+--     if bufname:match("neo%-tree") then
+--       neo_tree_win = win
+--       break
+--     end
+--   end
 
-  if neo_tree_win and current ~= neo_tree_win then
-    vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
-  else
-    vim.cmd("wincmd l") -- go right to main editor
-  end
-end, { desc = "Toggle focus between Neo-tree and editor" })
+--   if neo_tree_win and current ~= neo_tree_win then
+--     vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
+--   else
+--     vim.cmd("wincmd l") -- go right to main editor
+--   end
+-- end, { desc = "Toggle focus between Neo-tree and editor" })
 -- Toggle focus between vvim-tree and main editor
 -- Toggle focus between neo-tree and editor, or open neo-tree if it's closed
 vim.keymap.set("n", "<M-Tab>", function()
@@ -201,7 +201,7 @@ map('n', '<S-Down>', 'yyddp', defaults)
 -- Keymaps for Nvim tree
 -- map('n', '<leader>e', ':NvimTreeToggle<cr>', defaults)
 -- Toggle tree with Ctrl+n
-vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<M-n>", ":NvimTreeToggle<CR>", { silent = true })
 
 -- Jump back to the tree with Ctrl+n
 -- vim.keymap.set("n", "<C-n>", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
@@ -301,6 +301,21 @@ wk.register({
     I = { "<Plug>(VM-Select-Previous-Inner-Word)", "Select Previous Inner Word", mode = { "n" } },
     l = { "<Plug>(VM-Select-Next-Line)", "Select Next Line", mode = { "n" } },
     L = { "<Plug>(VM-Select-Previous-Line)", "Select Previous Line", mode = { "n" } },
-    
-  }
+  },
+  t = {
+      name = "Trouble",
+      s = { "<cmd>Telescope lsp_document_symbols<cr>", "LSP Document Symbols" },
+      S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "LSP Workspace Symbols" },
+      f = { "<cmd>Trouble lsp_definitions toggle focus=true<cr>", "LSP Definitions" },
+      F = { "<cmd>Trouble lsp_definitions toggle focus=false<cr>", "LSP Definitions (All)" },
+      d = { "<cmd>Trouble document_symbols toggle focus=true<cr>", "Document Symbols" },
+      D = { "<cmd>Trouble document_symbols toggle focus=false<cr>", "Document Symbols (All)" },
+      r = { "<cmd>Trouble lsp_references toggle focus=true<cr>", "LSP References" },
+      x = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics" },
+      X = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics" },
+      ts = { "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols" },
+      l = { "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP References" },
+      L = { "<cmd>Trouble loclist toggle<cr>", "Location List" },
+      Q = { "<cmd>Trouble qflist toggle<cr>", "Quickfix List" },
+    },
 }, { prefix = "<leader>" })
