@@ -1,45 +1,73 @@
 local builtin = require('telescope.builtin')
 local map = vim.keymap.set
 local set = vim.opt
-local defaults = { noremap = true, silent = true }
+local defaults = {
+    noremap = true,
+    silent = true
+}
 local telescope = require("telescope.builtin")
 local wk = require("which-key")
 
-
 -- vim.keymap.set("n", "<leader>p", telescope.find_files, { desc = "Find files" })
 -- vim.keymap.set("n", "<leader>f", telescope.live_grep, { desc = "Live grep" })
-vim.keymap.set("n", "<leader>fg", telescope.git_files, { desc = "Git files" })
+vim.keymap.set("n", "<leader>fg", telescope.git_files, {
+    desc = "Git files"
+})
 -- vim.keymap.set("n", "<leader>c", telescope.git_commits, { desc = "Git commits" })
 map('n', '<leader>ff', builtin.find_files, {})
 
 vim.keymap.set("n", "<leader>fc", function()
     -- This will search for in the current working directory
-  telescope.grep_string({ search = vim.fn.input("Grep for > ") })
-end, { desc = "Find 'console.log' usages" })
+    telescope.grep_string({
+        search = vim.fn.input("Grep for > ")
+    })
+end, {
+    desc = "Find 'console.log' usages"
+})
 -- map('n', '<leader>fg', builtin.live_grep, {})
 -- map('n', '<leader>fb', builtin.buffers, {})
 -- map('n', '<leader>fh', builtin.help_tags, {})
 
 -- Next buffer
-vim.keymap.set("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", {
+    noremap = true,
+    silent = true
+})
 
 -- Previous buffer
-vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>q", ":bd<CR>", { desc = "Close current buffer", noremap = true, silent = true })
+vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set("n", "<leader>q", ":bd<CR>", {
+    desc = "Close current buffer",
+    noremap = true,
+    silent = true
+})
 
-vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "Close current tab" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", {
+    desc = "Close current tab"
+})
 
 -- --new tab
-vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", {
+    desc = "New tab"
+})
 -- --close tab
-vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "Close tab" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", {
+    desc = "Close tab"
+})
 -- --close all tabs
-vim.keymap.set("n", "<leader>ta", ":tabonly<CR>", { desc = "Close all tabs" })
+vim.keymap.set("n", "<leader>ta", ":tabonly<CR>", {
+    desc = "Close all tabs"
+})
 
-
-vim.keymap.set("n", "<leader>b", "<C-o>", { desc = "Jump back" })
-vim.keymap.set("n", "<leader>B", "<C-i>", { desc = "Jump forward" })
-
+vim.keymap.set("n", "<leader>b", "<C-o>", {
+    desc = "Jump back"
+})
+vim.keymap.set("n", "<leader>B", "<C-i>", {
+    desc = "Jump forward"
+})
 
 -- Toggle file explorer
 -- vim.keymap.set("n", "<leader>e", function()
@@ -68,28 +96,30 @@ vim.keymap.set("n", "<leader>B", "<C-i>", { desc = "Jump forward" })
 -- Toggle focus between vvim-tree and main editor
 -- Toggle focus between neo-tree and editor, or open neo-tree if it's closed
 vim.keymap.set("n", "<M-Tab>", function()
-  local current_win = vim.api.nvim_get_current_win()
-  local neo_tree_win = nil
+    local current_win = vim.api.nvim_get_current_win()
+    local neo_tree_win = nil
 
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "neo-tree" then
-      neo_tree_win = win
-      break
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "neo-tree" then
+            neo_tree_win = win
+            break
+        end
     end
-  end
 
-  if neo_tree_win then -- if neo-tree is open
-    if current_win == neo_tree_win then -- and focused
-      vim.cmd("wincmd p") -- focus previous window (editor)
-    else -- and not focused
-      vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
+    if neo_tree_win then -- if neo-tree is open
+        if current_win == neo_tree_win then -- and focused
+            vim.cmd("wincmd p") -- focus previous window (editor)
+        else -- and not focused
+            vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
+        end
+    else
+        require("nvim-tree.api").tree.focus() -- jump to tree
+        -- if neo-tree is not open, open it
+        -- require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
     end
-  else
-    require("nvim-tree.api").tree.focus() -- jump to tree
-    -- if neo-tree is not open, open it
-    -- require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
-  end
-end, { desc = "Toggle focus Neo-tree/editor" })
+end, {
+    desc = "Toggle focus Neo-tree/editor"
+})
 -- https://github.com/bugb/dotfiles/blob/main/.config/nvim/core/options.lua
 -- Keys notation table:
 -- https://neovim.io/doc/user/intro.html#key-notation
@@ -118,9 +148,10 @@ map("n", "<C-q>", "", defaults)
 map('i', 'jj', '<esc>l', defaults)
 
 -- Map leader to <Space>
-map("n", " ", "<Nop>", { silent = true, remap = false })
-
-
+map("n", " ", "<Nop>", {
+    silent = true,
+    remap = false
+})
 
 -- Using <leader> + number (1, 2, ... 9) to switch tab
 -- for i=1,9,1
@@ -128,7 +159,6 @@ map("n", " ", "<Nop>", { silent = true, remap = false })
 --   map('n', '<leader>'..i, i.."gt", {})
 -- end
 -- map('n', '<leader>0', ":tablast<cr>", {})
-
 
 -- map for quick quit, save files using leader key
 ---- Normal mode
@@ -147,9 +177,8 @@ map('n', '<leader>nv', ':vsplit ~/.config/nvim/init.lua<cr>', {})
 map('i', '{<cr>', '{<cr>}<ESC>kA<CR>', {})
 closing_pairs = {'}', ')', ']', '"', "'", '>'}
 opening_pairs = {'{', '(', '[', '"', "'", '<'}
-for key, chr in pairs(opening_pairs)
-do
-  map('i', chr, chr..closing_pairs[key]..'<esc>i', {})
+for key, chr in pairs(opening_pairs) do
+    map('i', chr, chr .. closing_pairs[key] .. '<esc>i', {})
 end
 
 -- use U for redo :))
@@ -172,8 +201,8 @@ map('n', '<leader>O', ':<C-u>call append(line(".")-1, repeat([""], v:count1))<CR
 -- Fast searching text under cursor with Goole with Ctrl+q Ctrl+g
 -- I am using ArchLinux so I use the xdg-open command
 -- For other file system it can be opEn
-local searching_google_in_normal = [[:lua vim.fn.system({'xdg-open', 'https://google.com/search?q=' .. vim.fn.expand("<cword>")})<CR>]]
-map("n", "<C-q><C-g>", searching_google_in_normal, defaults)
+-- local searching_google_in_normal = [[:lua vim.fn.system({'xdg-open', 'https://google.com/search?q=' .. vim.fn.expand("<cword>")})<CR>]]
+-- map("n", "<C-q><C-g>", searching_google_in_normal, defaults)
 
 -- Select all text in the current buffer
 map('n', '<leader>C', ':keepjumps normal! ggyG<cr>', defaults)
@@ -201,7 +230,6 @@ map('n', '<S-Down>', 'yyddp', defaults)
 -- Keymaps for Nvim tree
 -- map('n', '<leader>e', ':NvimTreeToggle<cr>', defaults)
 -- Toggle tree with Ctrl+n
-vim.keymap.set("n", "<M-n>", ":NvimTreeToggle<CR>", { silent = true })
 
 -- Jump back to the tree with Ctrl+n
 -- vim.keymap.set("n", "<C-n>", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
@@ -219,103 +247,186 @@ map('n', 'L', '$', defaults)
 
 ---- Do some magic with autocmd
 -- Remove trailing space
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+    pattern = {"*"},
+    command = [[%s/\s\+$//e]]
 })
---Thank to the commit: https://github.com/vijaymarupudi/nvim-fzf-commands/issues/7
---map('n', '<Leader>f', ':lua require("fzf-commands").files({command_flags="--hidden --exclude .git --exclude node_modules"})<CR>', defaults)
+-- Thank to the commit: https://github.com/vijaymarupudi/nvim-fzf-commands/issues/7
+-- map('n', '<Leader>f', ':lua require("fzf-commands").files({command_flags="--hidden --exclude .git --exclude node_modules"})<CR>', defaults)
 
-
-vim.keymap.set("n", "<leader>tT", ":tabnew | terminal<CR>", { desc = "Open terminal (new tab)", noremap = true, silent = true })
-
+vim.keymap.set("n", "<leader>tT", ":tabnew | terminal<CR>", {
+    desc = "Open terminal (new tab)",
+    noremap = true,
+    silent = true
+})
 
 vim.keymap.set("n", "<leader>pp", function()
-  require("telescope.builtin").commands()
-end, { desc = "Command Palette (like VS Code)" })
+    require("telescope.builtin").commands()
+end, {
+    desc = "Command Palette (like VS Code)"
+})
 
-
-vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
-vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment (visual)" })
+vim.keymap.set("n", "<leader>/", "gcc", {
+    remap = true,
+    desc = "Toggle comment"
+})
+vim.keymap.set("v", "<leader>/", "gc", {
+    remap = true,
+    desc = "Toggle comment (visual)"
+})
 
 vim.keymap.set('n', '<leader>rt', function()
-  local cwd = vim.fn.getcwd()
-  local open_cmd = "open -a iTerm '" .. cwd .. "'"  -- macOS with iTerm
-  -- local open_cmd = "gnome-terminal --working-directory='" .. cwd .. "'" -- Linux
-  vim.fn.system(open_cmd)
-end, { noremap = true, silent = true })
-
+    local cwd = vim.fn.getcwd()
+    local open_cmd = "open -a iTerm '" .. cwd .. "'" -- macOS with iTerm
+    -- local open_cmd = "gnome-terminal --working-directory='" .. cwd .. "'" -- Linux
+    vim.fn.system(open_cmd)
+end, {
+    noremap = true,
+    silent = true
+})
 
 local treeApi = require("nvim-tree.api")
-
+local function opts(desc)
+    return {
+        desc = "nvim-tree: " .. desc,
+        buffer = bufnr,
+        noremap = true,
+        silent = true,
+        nowait = true
+    }
+end
 -- Collapse all: Option + c
-vim.keymap.set('n', '<M-c>', function()
-  treeApi.tree.focus()
-  treeApi.tree.collapse_all()
-end, { noremap = true, silent = true, desc = "NvimTree: Collapse All" })
-
+vim.keymap.set("n", "W", treeApi.tree.collapse_all, opts("Collapse"))
+vim.keymap.set("n", "E", treeApi.tree.expand_all, opts("Expand All"))
+vim.keymap.set("n", "K", treeApi.node.show_info_popup, opts("Info"))
+vim.keymap.set("n", "H", treeApi.tree.toggle_hidden_filter, opts("Toggle Dotfiles"))
+vim.keymap.set("n", "I", treeApi.tree.toggle_gitignore_filter, opts("Toggle Git Ignore"))
+vim.keymap.set("n", "<M-n>", ":NvimTreeToggle<CR>", {
+    silent = true
+})
 
 -- Expand all: Option + o
 vim.keymap.set('n', '<M-o>', function()
-  treeApi.tree.focus()
-  treeApi.tree.expand_all()
-end, { noremap = true, silent = true, desc = "NvimTree: Expand All" })
-
+    treeApi.tree.focus()
+    treeApi.tree.expand_all()
+end, {
+    noremap = true,
+    silent = true,
+    desc = "NvimTree: Expand All"
+})
 
 vim.keymap.set('n', '<leader>1', '<Cmd>BufferLineGoToBuffer 1<CR>', {})
 vim.keymap.set('n', '<leader>2', '<Cmd>BufferLineGoToBuffer 2<CR>', {})
 vim.keymap.set('n', '<leader>3', '<Cmd>BufferLineGoToBuffer 3<CR>', {})
-vim.keymap.set('n', '<leader>4', '<Cmd>BufferLineGoToBuffer 4<CR>', {}) 
+vim.keymap.set('n', '<leader>4', '<Cmd>BufferLineGoToBuffer 4<CR>', {})
 vim.keymap.set('n', '<leader>5', '<Cmd>BufferLineGoToBuffer 5<CR>', {})
---buffer last
+-- buffer last
 vim.keymap.set('n', '<leader>0', '<Cmd>BufferLineGoToBuffer -1<CR>', {})
 -- from tree to previous buffer
-vim.keymap.set('n', '<leader>p', '<Cmd>BufferLineGoToBuffer -1<CR>', { desc = "Go to previous buffer" })
+vim.keymap.set('n', '<leader>p', '<Cmd>BufferLineGoToBuffer -1<CR>', {
+    desc = "Go to previous buffer"
+})
 
-
---https://github.com/alextricity25/nvim_weekly_plugin_configs/blob/01b77d3f41a2c429d397f37a2901e40b47bd6507/lua/keymappings.lua
+-- https://github.com/alextricity25/nvim_weekly_plugin_configs/blob/01b77d3f41a2c429d397f37a2901e40b47bd6507/lua/keymappings.lua
 local function visual_cursors_with_delay()
-  -- Execute the vm-visual-cursors command.
-  vim.cmd('silent! execute "normal! \\<Plug>(VM-Visual-Cursors)"')
-  -- Introduce delay via VimScript's 'sleep' (set to 500 milliseconds here).
-  vim.cmd('sleep 200m')
-  -- Press 'A' in normal mode after the delay.
-  vim.cmd('silent! execute "normal! A"')
+    -- Execute the vm-visual-cursors command.
+    vim.cmd('silent! execute "normal! \\<Plug>(VM-Visual-Cursors)"')
+    -- Introduce delay via VimScript's 'sleep' (set to 500 milliseconds here).
+    vim.cmd('sleep 200m')
+    -- Press 'A' in normal mode after the delay.
+    vim.cmd('silent! execute "normal! A"')
 end
 
-
 wk.register({
-  m = {
-    name = "Visual Multi",
-    a = { "<Plug>(VM-Select-All)<Tab>", "Select All", mode = { "n" } },
-    r = { "<Plug>(VM-Start-Regex-Search)", "Start Regex Search", mode = { "n" } },
-    p = { "<Plug>(VM-Add-Cursor-At-Pos)", "Add Cursor At Pos", mode = { "n" } },
-    v = { visual_cursors_with_delay, "Visual Cursors", mode = { "v" } },
-    o = { "<Plug>(VM-Toggle-Mappings)", "Toggle Mapping", mode = { "n" } },
-    d = { "<Plug>(VM-Select-Next-Occurrence)", "Select Next Occurrence", mode = { "n" } },
-    D = { "<Plug>(VM-Select-Previous-Occurrence)", "Select Previous Occurrence", mode = { "n" } },
-    c = { "<Plug>(VM-Select-Current-Word)", "Select Current Word", mode = { "n" } },
-    s = { "<Plug>(VM-Select-Next-Character)", "Select Next Character", mode = { "n" } },
-    S = { "<Plug>(VM-Select-Previous-Character)", "Select Previous Character", mode = { "n" } },
-    i = { "<Plug>(VM-Select-Next-Inner-Word)", "Select Next Inner Word", mode = { "n" } },
-    I = { "<Plug>(VM-Select-Previous-Inner-Word)", "Select Previous Inner Word", mode = { "n" } },
-    l = { "<Plug>(VM-Select-Next-Line)", "Select Next Line", mode = { "n" } },
-    L = { "<Plug>(VM-Select-Previous-Line)", "Select Previous Line", mode = { "n" } },
-  },
-  t = {
-      name = "Trouble",
-      s = { "<cmd>Telescope lsp_document_symbols<cr>", "LSP Document Symbols" },
-      S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "LSP Workspace Symbols" },
-      f = { "<cmd>Trouble lsp_definitions toggle focus=true<cr>", "LSP Definitions" },
-      F = { "<cmd>Trouble lsp_definitions toggle focus=false<cr>", "LSP Definitions (All)" },
-      d = { "<cmd>Trouble document_symbols toggle focus=true<cr>", "Document Symbols" },
-      D = { "<cmd>Trouble document_symbols toggle focus=false<cr>", "Document Symbols (All)" },
-      r = { "<cmd>Trouble lsp_references toggle focus=true<cr>", "LSP References" },
-      x = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics" },
-      X = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics" },
-      ts = { "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols" },
-      l = { "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP References" },
-      L = { "<cmd>Trouble loclist toggle<cr>", "Location List" },
-      Q = { "<cmd>Trouble qflist toggle<cr>", "Quickfix List" },
+    m = {
+        name = "Visual Multi",
+        a = {
+            "<Plug>(VM-Select-All)<Tab>",
+            "Select All",
+            mode = {"n"}
+        },
+        r = {
+            "<Plug>(VM-Start-Regex-Search)",
+            "Start Regex Search",
+            mode = {"n"}
+        },
+        p = {
+            "<Plug>(VM-Add-Cursor-At-Pos)",
+            "Add Cursor At Pos",
+            mode = {"n"}
+        },
+        v = {
+            visual_cursors_with_delay,
+            "Visual Cursors",
+            mode = {"v"}
+        },
+        o = {
+            "<Plug>(VM-Toggle-Mappings)",
+            "Toggle Mapping",
+            mode = {"n"}
+        },
+        d = {
+            "<Plug>(VM-Select-Next-Occurrence)",
+            "Select Next Occurrence",
+            mode = {"n"}
+        },
+        D = {
+            "<Plug>(VM-Select-Previous-Occurrence)",
+            "Select Previous Occurrence",
+            mode = {"n"}
+        },
+        c = {
+            "<Plug>(VM-Select-Current-Word)",
+            "Select Current Word",
+            mode = {"n"}
+        },
+        s = {
+            "<Plug>(VM-Select-Next-Character)",
+            "Select Next Character",
+            mode = {"n"}
+        },
+        S = {
+            "<Plug>(VM-Select-Previous-Character)",
+            "Select Previous Character",
+            mode = {"n"}
+        },
+        i = {
+            "<Plug>(VM-Select-Next-Inner-Word)",
+            "Select Next Inner Word",
+            mode = {"n"}
+        },
+        I = {
+            "<Plug>(VM-Select-Previous-Inner-Word)",
+            "Select Previous Inner Word",
+            mode = {"n"}
+        },
+        l = {
+            "<Plug>(VM-Select-Next-Line)",
+            "Select Next Line",
+            mode = {"n"}
+        },
+        L = {
+            "<Plug>(VM-Select-Previous-Line)",
+            "Select Previous Line",
+            mode = {"n"}
+        }
     },
-}, { prefix = "<leader>" })
+    t = {
+        name = "Telescope + Trouble",
+        s = {"<cmd>Telescope lsp_document_symbols<cr>", "LSP Document Symbols"},
+        S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "LSP Workspace Symbols"},
+        f = {"<cmd>Trouble lsp_definitions toggle focus=true<cr>", "LSP Definitions"},
+        F = {"<cmd>Trouble lsp_definitions toggle focus=false<cr>", "LSP Definitions (All)"},
+        d = {"<cmd>Trouble document_symbols toggle focus=true<cr>", "Document Symbols"},
+        D = {"<cmd>Trouble document_symbols toggle focus=false<cr>", "Document Symbols (All)"},
+        r = {"<cmd>Trouble lsp_references toggle focus=true<cr>", "LSP References"},
+        x = {"<cmd>Trouble diagnostics toggle<cr>", "Diagnostics"},
+        X = {"<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics"},
+        ts = {"<cmd>Trouble symbols toggle focus=false<cr>", "Symbols"},
+        l = {"<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP References"},
+        L = {"<cmd>Trouble loclist toggle<cr>", "Location List"},
+        Q = {"<cmd>Trouble qflist toggle<cr>", "Quickfix List"}
+    }
+}, {
+    prefix = "<leader>"
+})
