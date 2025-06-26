@@ -10,19 +10,22 @@ local wk = require("which-key")
 
 -- vim.keymap.set("n", "<leader>p", telescope.find_files, { desc = "Find files" })
 -- vim.keymap.set("n", "<leader>f", telescope.live_grep, { desc = "Live grep" })
-vim.keymap.set("n", "<leader>fg", telescope.git_files, {
-    desc = "Git files"
-})
--- vim.keymap.set("n", "<leader>c", telescope.git_commits, { desc = "Git commits" })
-map('n', '<leader>ff', builtin.find_files, {})
+-- vim.keymap.set("n", "<leader>fg", telescope.git_files, {
+--     desc = "Git files"
+-- })
 
-vim.keymap.set("n", "<leader>fc", function()
+-- vim.keymap.set("n", "<leader>c", telescope.git_commits, { desc = "Git commits" })
+-- map('n', '<leader>ff', builtin.find_files, {})
+
+vim.keymap.set("n", "<leader>r", function()
     -- This will search for in the current working directory
     telescope.grep_string({
         search = vim.fn.input("Grep for > ")
     })
 end, {
-    desc = "Find 'console.log' usages"
+    desc = "Find string in current working directory",
+    noremap = true,
+    silent = true
 })
 -- map('n', '<leader>fg', builtin.live_grep, {})
 -- map('n', '<leader>fb', builtin.buffers, {})
@@ -174,12 +177,12 @@ map('i', ';x', '<esc>:wq<CR>')
 map('n', '<leader>nv', ':vsplit ~/.config/nvim/init.lua<cr>', {})
 
 -- auto add closing {, [, (, ', ", <
-map('i', '{<cr>', '{<cr>}<ESC>kA<CR>', {})
-closing_pairs = {'}', ')', ']', '"', "'", '>'}
-opening_pairs = {'{', '(', '[', '"', "'", '<'}
-for key, chr in pairs(opening_pairs) do
-    map('i', chr, chr .. closing_pairs[key] .. '<esc>i', {})
-end
+-- map('i', '{<cr>', '{<cr>}<ESC>kA<CR>', {})
+-- closing_pairs = {'}', ')', ']', '"', "'", '>'}
+-- opening_pairs = {'{', '(', '[', '"', "'", '<'}
+-- for key, chr in pairs(opening_pairs) do
+--     map('i', chr, chr .. closing_pairs[key] .. '<esc>i', {})
+-- end
 
 -- use U for redo :))
 map('n', 'U', '<C-r>', {})
@@ -426,7 +429,73 @@ wk.register({
         l = {"<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP References"},
         L = {"<cmd>Trouble loclist toggle<cr>", "Location List"},
         Q = {"<cmd>Trouble qflist toggle<cr>", "Quickfix List"}
+    },
+    z = {
+        name = "LSP",
+        r = {function()
+            vim.lsp.buf.rename()
+        end, "Rename symbol"},
+        a = {function()
+            vim.lsp.buf.code_action()
+        end, "Code Action"},
+        f = {function()
+            vim.lsp.buf.format({
+                async = true
+            })
+        end, "Format"},
+        c = {function()
+            LazyVim.lsp.action["source.addMissingImports.ts"]()
+        end, "Add missing imports"}
+    },
+    w = {
+        name = "Window",
+        s = {"<C-w>s", "Split window horizontally"},
+        v = {"<C-w>v", "Split window vertically"},
+        h = {"<C-w>h", "Move to left window"},
+        j = {"<C-w>j", "Move to bottom window"},
+        k = {"<C-w>k", "Move to top window"},
+        l = {"<C-w>l", "Move to right window"},
+        c = {"<C-w>c", "Close current window"},
+        o = {"<C-w>o", "Close other windows"},
+        qh = {"<C-w>h :q<CR>", "Close left window"},
+        qj = {"<C-w>j :q<CR>", "Close bottom window"},
+        qk = {"<C-w>k :q<CR>", "Close top window"},
+        ql = {"<C-w>l :q<CR>", "Close right window"}
     }
 }, {
     prefix = "<leader>"
 })
+
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--     buffer = buffer,
+--     callback = function()
+--         vim.lsp.buf.format {
+--             async = false
+--         }
+--     end
+-- })
+-- Load Noice extension for Telescope
+require("telescope").load_extension("noice")
+
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", {
+    desc = "Move line down"
+})
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", {
+    desc = "Move line up"
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "NvimTree",
+    callback = function()
+        vim.b.noice_disable = true
+    end
+})
+
+vim.diagnostic.config({
+    virtual_text = false, -- disables inline red text
+    update_in_insert = false
+})
+
+-- <leader>uf: toggle autoformat on save
+
+--close bottom 

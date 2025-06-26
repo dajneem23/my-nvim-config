@@ -1,3 +1,7 @@
+if true then
+    return {}
+end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 return {
   "neovim/nvim-lspconfig",
   opts = {
@@ -134,12 +138,16 @@ return {
             ---@type string, string, lsp.Range
             local action, uri, range = unpack(command.arguments)
 
+
+
             local function move(newf)
               client.request("workspace/executeCommand", {
                 command = command.command,
                 arguments = { action, uri, range, newf },
               })
             end
+
+
 
             local fname = vim.uri_to_fname(uri)
             client.request("workspace/executeCommand", {
@@ -186,3 +194,4 @@ return {
     },
   },
 }
+

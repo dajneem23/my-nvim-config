@@ -34,8 +34,6 @@ return{
                 },
             })
 
-            -- Enable LSP completion capabilities in nvim-cmp
-            -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            -- You can use this capabilities object when setting up your LSP servers (example: lspconfig)
+
         end
 }

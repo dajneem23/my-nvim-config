@@ -21,5 +21,6 @@ return {
   },
 
   -- this plugin will be loaded on the autocmd event "UIEnter"
-  { "rebelot/heirline.nvim", event = "UIEnter" },
+{ "rebelot/heirline.nvim",   event = "VeryLazy" },
+
 }
