@@ -107,9 +107,9 @@ return {{
     config = function() -- for help on nvim options go to :h vim.lsp.buf
         require("neoconf").setup({})
         local lspconfig = require("lspconfig")
-        lspconfig.ts_ls.setup({
-            capabilities = require("cmp_nvim_lsp").default_capabilities()
-        })
+local util = require("lspconfig.util")
+
+
         lspconfig.rust_analyzer.setup({
             -- TODO: fix cmp_nvim_lsp
             capabilities = require("cmp_nvim_lsp").default_capabilities(),

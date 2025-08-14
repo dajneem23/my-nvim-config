@@ -280,7 +280,19 @@ return {
                     n = {
                         ["q"] = actions.close
                     }
-                }
+                },
+                -- for fixing the cursor jump when using fzf
+                layout_strategy = "horizontal",
+                sorting_strategy = "ascending", -- prevents cursor jump sometimes
+                scroll_strategy = "cycle",
+                winblend = 10, -- set to 0 if transparency causes issues
+                preview = false,
+                layout_config = {
+                    prompt_position = "top",
+                    preview_width = 0.5,
+                    -- results_width = 0.8
+                },
+                border = true
             },
             pickers = {
                 find_files = {

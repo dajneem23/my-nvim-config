@@ -1,5 +1,6 @@
 return {
   "stevearc/aerial.nvim",
+  event = "VeryLazy",
   config = function()
     require("aerial").setup()
     vim.keymap.set("n", "<leader>ao", "<cmd>AerialToggle<CR>", { desc = "Toggle Aerial Outline" })
