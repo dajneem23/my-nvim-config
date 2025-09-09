@@ -537,3 +537,13 @@ vim.keymap.set("n", "<leader>rw", function()
 end, {
     desc = "Replace word under cursor globally"
 })
+
+-- 'we' = end of word
+vim.keymap.set("n", "we", "$", {
+    noremap = true
+})
+
+-- 'wq' = start of line
+vim.keymap.set("n", "wq", "0", {
+    noremap = true
+})
