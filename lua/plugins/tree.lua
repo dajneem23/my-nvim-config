@@ -1,5 +1,8 @@
+if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 return {
     "nvim-tree/nvim-tree.lua",
+    enable = false,
     version = "*",
     dependencies = {"nvim-tree/nvim-web-devicons"},
     config = function()
@@ -73,10 +76,11 @@ return {
             modified = {
                 enable = true
             },
-            diagnostics ={
+            diagnostics = {
                 enable = false,
                 show_on_dirs = true, -- show diagnostics on directories
-                debounce_delay = 50, -- delay for diagnostics
+                -- debounce_delay = 50, -- delay for diagnostics
+
                 severity = {
                     min = vim.diagnostic.severity.WARN, -- only show warnings and errors
                     max = vim.diagnostic.severity.ERROR
@@ -92,7 +96,7 @@ return {
                 custom = {"^.git$"} -- only hide .git folder
             },
             git = {
-                enable = false,-- erorr 
+                enable = false, -- erorr 
                 ignore = false -- <== important to show node_modules
             },
             renderer = {
@@ -114,6 +118,29 @@ return {
                 }
             }
         })
+
+        local treeApi = require("nvim-tree.api")
+        local function opts(desc)
+            return {
+                desc = "nvim-tree: " .. desc,
+                buffer = bufnr,
+                noremap = true,
+                silent = true,
+                nowait = true
+            }
+        end
+        -- Collapse all: Option + c
+        vim.keymap.set("n", "W", treeApi.tree.collapse_all, opts("Collapse"))
+        vim.keymap.set("n", "E", treeApi.tree.expand_all, opts("Expand All"))
+        vim.keymap.set("n", "K", treeApi.node.show_info_popup, opts("Info"))
+        vim.keymap.set("n", "H", treeApi.tree.toggle_hidden_filter, opts("Toggle Dotfiles"))
+        vim.keymap.set("n", "I", treeApi.tree.toggle_gitignore_filter, opts("Toggle Git Ignore"))
+        -- toggle hide node_modules
+        -- vim.keymap.set("n", "B", treeApi.tree.toggle_no_buffer_filter, opts("Toggle No Buffer"))
+        vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", {
+            silent = true
+        })
+    
     end
 }
 

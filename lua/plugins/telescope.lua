@@ -26,7 +26,15 @@ return {
                 end
             end)
         end
-    }},
+    },
+{
+  "nvim-telescope/telescope-file-browser.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  config = function()
+    require("telescope").load_extension("file_browser")
+  end,
+}
+},
     keys = {{
         "<leader>,",
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
@@ -211,7 +219,20 @@ return {
             })
         end,
         desc = "Goto Symbol (Workspace)"
-    }},
+    },
+    {
+        "<leader>fB",
+        function()
+        require("telescope").extensions.file_browser.file_browser({
+            grouped = true,      -- show folders grouped
+            respect_gitignore = true,
+            hidden = true,
+            initial_mode = "normal",
+        })
+        end,
+        desc = "File Browser"
+    }
+},
     opts = function()
         local actions = require("telescope.actions")
 
@@ -249,6 +270,9 @@ return {
             end
         end
 
+
+        
+
         return {
             defaults = {
                 prompt_prefix = " ",
@@ -280,7 +304,19 @@ return {
                     n = {
                         ["q"] = actions.close
                     }
-                }
+                },
+                -- for fixing the cursor jump when using fzf
+                layout_strategy = "horizontal",
+                sorting_strategy = "ascending", -- prevents cursor jump sometimes
+                scroll_strategy = "cycle",
+                winblend = 10, -- set to 0 if transparency causes issues
+                preview = false,
+                layout_config = {
+                    prompt_position = "top",
+                    preview_width = 0.5,
+                    -- results_width = 0.8
+                },
+                border = true
             },
             pickers = {
                 find_files = {
@@ -289,5 +325,5 @@ return {
                 }
             }
         }
-    end
+    end,
 }

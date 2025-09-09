@@ -1,24 +1,25 @@
----@diagnostic disable: missing-fields
-return {{
+return {
+  {
     "neovim/nvim-lspconfig",
     dependencies = { -- main one
-    {
+      "folke/neoconf.nvim",
+      {
         "ms-jpq/coq_nvim",
-        branch = "coq"
-    }, -- 9000+ Snippets
-    {
+        branch = "coq",
+      }, -- 9000+ Snippets
+      {
         "ms-jpq/coq.artifacts",
-        branch = "artifacts"
-    }, -- lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-    -- Need to **configure separately**
-    {
-        'ms-jpq/coq.thirdparty',
-        branch = "3p"
-    } -- - shell repl
-    -- - nvim lua api
-    -- - scientific calculator
-    -- - comment banner
-    -- - etc
+        branch = "artifacts",
+      }, -- lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+      -- Need to **configure separately**
+      {
+        "ms-jpq/coq.thirdparty",
+        branch = "3p",
+      }, -- - shell repl
+      -- - nvim lua api
+      -- - scientific calculator
+      -- - comment banner
+      -- - etc
     },
     opts = {
         diagnostics = {
@@ -105,11 +106,10 @@ return {{
         }
     },
     config = function() -- for help on nvim options go to :h vim.lsp.buf
-        require("neoconf").setup({})
         local lspconfig = require("lspconfig")
-        lspconfig.ts_ls.setup({
-            capabilities = require("cmp_nvim_lsp").default_capabilities()
-        })
+        local util = require("lspconfig.util")
+
+
         lspconfig.rust_analyzer.setup({
             -- TODO: fix cmp_nvim_lsp
             capabilities = require("cmp_nvim_lsp").default_capabilities(),

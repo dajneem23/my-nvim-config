@@ -1,3 +1,7 @@
+-- if true then
+--     return {}
+-- end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
@@ -20,7 +24,7 @@ return {
 
     -- Provide a default lualine_c if missing
     opts.sections.lualine_c = opts.sections.lualine_c or {
-      { "filename", path = 1 },
+      { "filename", path = 2 },
     }
 
     -- Append Trouble's symbol component to lualine_c

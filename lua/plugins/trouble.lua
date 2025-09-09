@@ -1,7 +1,9 @@
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 --https://github.com/folke/trouble.nvim/blob/main/docs/examples.md
 return {"folke/trouble.nvim",
   opts = {}, -- for default options, refer to the configuration section for custom setup.
-  cmd = "Trouble",
+  cmd = "TroubleToggle",
   keys = {
     {
       "<leader>xx",
