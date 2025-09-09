@@ -26,7 +26,15 @@ return {
                 end
             end)
         end
-    }},
+    },
+{
+  "nvim-telescope/telescope-file-browser.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  config = function()
+    require("telescope").load_extension("file_browser")
+  end,
+}
+},
     keys = {{
         "<leader>,",
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
@@ -211,7 +219,20 @@ return {
             })
         end,
         desc = "Goto Symbol (Workspace)"
-    }},
+    },
+    {
+        "<leader>fB",
+        function()
+        require("telescope").extensions.file_browser.file_browser({
+            grouped = true,      -- show folders grouped
+            respect_gitignore = true,
+            hidden = true,
+            initial_mode = "normal",
+        })
+        end,
+        desc = "File Browser"
+    }
+},
     opts = function()
         local actions = require("telescope.actions")
 
@@ -248,6 +269,9 @@ return {
                 return {"where", "/r", ".", "*"}
             end
         end
+
+
+        
 
         return {
             defaults = {
@@ -301,5 +325,5 @@ return {
                 }
             }
         }
-    end
+    end,
 }
