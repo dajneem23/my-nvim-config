@@ -1,7 +1,8 @@
 -- if true then
 --     return {}
 -- end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-return {
+return 
+{
     "neovim/nvim-lspconfig",
     opts = {
         -- make sure mason installs the server
@@ -126,6 +127,8 @@ return {
         setup = {
             --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
             --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
+
+
             tsserver = function()
                 -- disable tsserver
                 return true

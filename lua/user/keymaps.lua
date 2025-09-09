@@ -378,9 +378,15 @@ wk.register({
                 async = true
             })
         end, "Format"},
-        c = {function()
+        ["."] = {function()
             LazyVim.lsp.action["source.addMissingImports.ts"]()
         end, "Add missing imports"},
+        -- line disgnostics
+        l = {"<cmd>lua vim.diagnostic.open_float()<CR>", "Line Diagnostics"},
+        -- buffer diagnostics
+        L = {"<cmd>Telescope diagnostics bufnr=0<CR>", "Buffer Diagnostics"},
+        -- workspace diagnostics
+        w = {"<cmd>Telescope diagnostics<CR>", "Workspace Diagnostics"},
         -- 📄 Show symbols in the current file
         s = {"<cmd>Telescope lsp_document_symbols<CR>", "Document Symbols"},
 
@@ -547,3 +553,48 @@ vim.keymap.set("n", "we", "$", {
 vim.keymap.set("n", "wq", "0", {
     noremap = true
 })
+
+-- wk to buffer above current
+vim.keymap.set("n", "wk", "<C-w>k", {
+    noremap = true,
+    silent = true,
+    desc = "Go to upper window"
+})
+-- wj to buffer below current
+vim.keymap.set("n", "wj", "<C-w>j", {
+    noremap = true,
+    silent = true,
+    desc = "Go to lower window"
+})
+-- wh to buffer left of current
+vim.keymap.set("n", "wh", "<C-w>h", {
+    noremap = true,
+    silent = true,
+    desc = "Go to left window"
+})
+-- wl to buffer right of current
+vim.keymap.set("n", "wl", "<C-w>l", {
+    noremap = true,
+    silent = true,
+    desc = "Go to right window"
+})
+
+
+local telescope = require("telescope.builtin")
+
+vim.keymap.set("n", "<space><space>", function()
+  if vim.bo.filetype == "neo-tree" then
+    -- get node under cursor in Neo-tree
+    local state = require("neo-tree.sources.manager").get_state("filesystem")
+    local node = state.tree:get_node()
+    local path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
+    telescope.find_files({ cwd = path,
+        prompt_title = "Find files in " .. vim.fn.fnamemodify(path, ":t"),
+  })
+  else
+    -- fallback to LazyVim default (project root)
+    telescope.find_files({ cwd = require("lazyvim.util").root(),
+        prompt_title = "Find files in " .. vim.fn.fnamemodify(require("lazyvim.util").root(), ":t"),
+  })
+  end
+end, { desc = "Find files (smart: root or Neo-tree folder)" })
