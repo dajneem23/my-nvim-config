@@ -79,7 +79,7 @@ vim.keymap.set("n", "<leader>ta", ":tabonly<CR>", {
 vim.keymap.set("n", "<leader>b", "<C-o>", {
     desc = "Jump back"
 })
-vim.keymap.set("n", "<leader>B", "<C-i>", {
+vim.keymap.set("n", "<leader>B", "<C-O>", {
     desc = "Jump forward"
 })
 
@@ -373,11 +373,12 @@ wk.register({
         a = {function()
             vim.lsp.buf.code_action()
         end, "Code Action"},
-        f = {function()
-            vim.lsp.buf.format({
-                async = true
-            })
-        end, "Format"},
+        -- f = {function()
+        --     vim.lsp.buf.format({
+        --         async = true
+        --     })
+        -- end, "Format"},
+        -- f to fold brakets
         ["."] = {function()
             LazyVim.lsp.action["source.addMissingImports.ts"]()
         end, "Add missing imports"},
@@ -550,7 +551,7 @@ vim.keymap.set("n", "we", "$", {
 })
 
 -- 'wq' = start of line
-vim.keymap.set("n", "wq", "0", {
+vim.keymap.set("n", "wq", "^", {
     noremap = true
 })
 
@@ -578,7 +579,18 @@ vim.keymap.set("n", "wl", "<C-w>l", {
     silent = true,
     desc = "Go to right window"
 })
-
+-- w[ to go to start bracket
+vim.keymap.set("n", "w[", "%", {
+    noremap = true,
+    silent = true,
+    desc = "Go to matching bracket"
+})
+-- w] to go to end bracket
+vim.keymap.set("n", "w]", "%", {
+    noremap = true,
+    silent = true,
+    desc = "Go to matching bracket"
+})
 
 local telescope = require("telescope.builtin")
 

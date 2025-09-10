@@ -76,7 +76,7 @@ return {
             --         }
             --     }
             -- },
-            rust_analyzer = {},
+            -- rust_analyzer = {},
             -- ts_ls = {
             --     -- single_file_support = true,
             --     settings = {
@@ -113,16 +113,20 @@ return {
         lspconfig.rust_analyzer.setup({
             -- TODO: fix cmp_nvim_lsp
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            cmd = { vim.fn.expand("~/.local/bin/rust-analyzer") }, -- path to your rust-analyzer binary
             settings = {
                 ["rust-analyzer"] = {
                     -- Other Settings ...
                     procMacro = {
                         ignored = {
                             leptos_macro = { -- optional: --
-                            -- "component",
+                            -- "component",:
                             "server"}
                         }
-                    }
+                    },
+                    --  diagnostics = {
+                                -- enable = false;
+                            -- }
                 }
             }
         })
