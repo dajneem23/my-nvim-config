@@ -610,3 +610,12 @@ vim.keymap.set("n", "<space><space>", function()
   })
   end
 end, { desc = "Find files (smart: root or Neo-tree folder)" })
+
+-- vg => select all 
+vim.keymap.set("n", "vg", "ggVG$", {
+    noremap = true,
+    silent = true,
+    desc = "Select all"
+})
+-- •	vaf → select a function (including fn foo() { ... })
+-- •	vif → select inner function body (just inside { ... })

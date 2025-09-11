@@ -64,6 +64,7 @@ vim.o.mouse = "a"
 -- . Terminal Bell / Visual Bell
 vim.opt.errorbells = false
 vim.opt.visualbell = true
+vim.opt.belloff = "all"
 -- vim.opt.t_vb = ""
 vim.opt.cursorline = false
 vim.opt.cursorcolumn = false
@@ -116,3 +117,10 @@ vim.keymap.set('i', '<M-Right>', '<C-o>g_', {
     silent = true
 })
 
+
+-- vim.opt.wrap = true -- soft-wrap text
+-- vim.opt.linebreak = true -- wrap only at word boundaries
+-- vim.opt.breakindent = true
+vim.opt.wrap = false
+vim.opt.whichwrap = "b,s"
+vim.opt.iskeyword:remove({")", "]", "}"})

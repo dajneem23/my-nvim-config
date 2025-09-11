@@ -139,7 +139,12 @@ return {
             ["javascript"] = {"dprint", "prettier"},
             ["javascriptreact"] = {"dprint"},
             ["typescript"] = {"dprint", "prettier"},
-            ["typescriptreact"] = {"dprint"}
+            ["typescriptreact"] = {"dprint"},
+            ["rust"] = {"rustfmt"},
+            ["json"] = {"dprint", "prettier"},
+            ["jsonc"] = {"dprint", "prettier"},
+            ["markdown"] = {"prettier"},
+            ["solidity"] = {"prettier"}
         },
         formatters = {
             dprint = {

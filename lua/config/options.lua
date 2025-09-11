@@ -1,2 +1,2 @@
-vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
-
+-- Options for LazyVim configuration
+-- vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
