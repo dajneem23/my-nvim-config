@@ -410,7 +410,15 @@ wk.register({
             end)
         end, "Grep String"},
         --toggle comment 
-        ["/"] =  {"gcc", "Toggle Comment"}
+        z = {
+            name = "Zig", 
+            f = {"<cmd>call zig#fmt#Format()<CR>", "Format Zig file"},
+            b = {"<cmd>compiler zig_build_exe | make<CR>", "Build Zig file"},
+            t = {"<cmd>compiler zig_test | make<CR>", "Test Zig file"},
+            r = {"<cmd>!zig run %<CR>", "Run Zig file"},
+            c = {"<cmd>!zig build<CR>", "Zig build project"}
+        },
+        ["/"] =  {"gcc", "Toggle Comment"},
     },
     w = {
         name = "Window",

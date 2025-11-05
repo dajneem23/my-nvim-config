@@ -122,5 +122,11 @@ vim.keymap.set('i', '<M-Right>', '<C-o>g_', {
 -- vim.opt.linebreak = true -- wrap only at word boundaries
 -- vim.opt.breakindent = true
 vim.opt.wrap = false
-vim.opt.whichwrap = "b,s"
-vim.opt.iskeyword:remove({")", "]", "}"})
+-- vim.opt.whichwrap = "b,s"
+-- vim.opt.iskeyword:remove({")", "]", "}"})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    command = "setlocal formatoptions-=cro"
+})
+
+
