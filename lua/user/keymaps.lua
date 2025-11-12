@@ -553,15 +553,7 @@ end, {
     desc = "Replace word under cursor globally"
 })
 
--- 'we' = end of word
-vim.keymap.set("n", "we", "$", {
-    noremap = true
-})
 
--- 'wq' = start of line
-vim.keymap.set("n", "wq", "^", {
-    noremap = true
-})
 
 -- wk to buffer above current
 vim.keymap.set("n", "wk", "<C-w>k", {
@@ -627,3 +619,71 @@ vim.keymap.set("n", "vg", "ggVG$", {
 })
 -- •	vaf → select a function (including fn foo() { ... })
 -- •	vif → select inner function body (just inside { ... })
+-- Normal mode
+vim.keymap.set('n', '<Esc>[1;9C', '$', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('n', '<Esc>[1;9D', '^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>[1;9C', '<Esc>$a', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>[1;9D', '<Esc>^i', {
+    noremap = true,
+    silent = true
+})
+-- Insert mode
+vim.keymap.set('i', '<D-Right>', '<Esc>$a', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<D-Left>', '<Esc>^i', {
+    noremap = true,
+    silent = true
+})
+
+-- Normal & Visual mode
+-- Jump start/end of line (Command)
+vim.keymap.set({'n', 'v'}, '<D-Left>', '^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set({'n', 'v'}, '<D-Right>', 'g_', {
+    noremap = true,
+    silent = true
+})
+
+-- Jump word by word (Option)
+vim.keymap.set({'n', 'v'}, '<M-Left>', 'b', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set({'n', 'v'}, '<M-Right>', 'w', {
+    noremap = true,
+    silent = true
+})
+
+-- Insert mode
+-- Start/end of line
+vim.keymap.set('i', '<D-Left>', '<C-o>^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<D-Right>', '<C-o>g_', {
+    noremap = true,
+    silent = true
+})
+
+-- Jump word by word
+vim.keymap.set('i', '<M-Left>', '<C-o>b', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<M-Right>', '<C-o>w', {
+    noremap = true,
+    silent = true
+})

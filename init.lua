@@ -69,6 +69,9 @@ vim.opt.belloff = "all"
 vim.opt.cursorline = false
 vim.opt.cursorcolumn = false
 
+vim.opt.virtualedit = "onemore"
+
+
 if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
   -- stylua: ignore
   local result = vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
@@ -97,36 +100,24 @@ require "polish"
 
 require("user.keymaps")
 
--- Normal & Visual mode mappings
-vim.keymap.set({'n', 'v'}, '<M-Left>', '^', {
-    noremap = true,
-    silent = true
-}) -- start of line
-vim.keymap.set({'n', 'v'}, '<M-Right>', 'g_', {
-    noremap = true,
-    silent = true
-}) -- end of line (non-blank)
 
--- Insert mode mappings
-vim.keymap.set('i', '<M-Left>', '<C-o>^', {
-    noremap = true,
-    silent = true
-})
-vim.keymap.set('i', '<M-Right>', '<C-o>g_', {
-    noremap = true,
-    silent = true
-})
+
+
 
 
 -- vim.opt.wrap = true -- soft-wrap text
 -- vim.opt.linebreak = true -- wrap only at word boundaries
 -- vim.opt.breakindent = true
 vim.opt.wrap = false
+vim.opt.mouse = "a"
+
 -- vim.opt.whichwrap = "b,s"
 -- vim.opt.iskeyword:remove({")", "]", "}"})
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     command = "setlocal formatoptions-=cro"
 })
+
+
 
 
