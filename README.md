@@ -118,3 +118,18 @@ Here are some of the custom keymaps:
 - `lua/config/options.lua`: Neovim options.
 - `lua/plugins/`: Plugin configurations.
 - `lua/user/keymaps.lua`: Custom keymaps.
+
+## 🆕 Recent Changes
+
+- Added `zig.vim` plugin configuration for LazyVim at `lua/plugins/zig.lua` (loads for `*.zig` and `*.zon` files).
+- Configured Zig formatting and convenience keymaps (`<leader>zf`, `<leader>zb`, `<leader>zt`, `<leader>zr`).
+- Added `zls` (Zig Language Server) to `mason.nvim` ensure list via plugin config.
+- Enabled formatting configuration with `stevearc/conform.nvim` and added `format_on_save` options in `lua/plugins/lsp.lua` (adjust `async`/`timeout_ms` there to change behavior).
+
+To apply plugin changes run:
+
+```bash
+:Lazy sync
+```
+
+Or restart Neovim and run `:Lazy sync` from within Neovim.
