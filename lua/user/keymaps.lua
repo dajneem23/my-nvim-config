@@ -687,3 +687,53 @@ vim.keymap.set('i', '<M-Right>', '<C-o>w', {
     noremap = true,
     silent = true
 })
+
+vim.keymap.set('n', '<Esc>gg', 'gg', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('n', '<Esc>G', 'G', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('v', '<Esc>gg', '<Esc>gg', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('v', '<Esc>G', '<Esc>G', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>gg', '<Esc>gg', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>G', '<Esc>G', {
+    noremap = true,
+    silent = true
+})
+
+vim.keymap.set('n', '<Esc>^', '^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('n', '<Esc>$', '$', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('v', '<Esc>^', '<Esc>^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('v', '<Esc>$', '<Esc>$', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>^', '<Esc>^', {
+    noremap = true,
+    silent = true
+})
+vim.keymap.set('i', '<Esc>$', '<Esc>$', {
+    noremap = true,
+    silent = true
+})
