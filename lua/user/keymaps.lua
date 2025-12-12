@@ -409,16 +409,16 @@ wk.register({
                 end
             end)
         end, "Grep String"},
-        --toggle comment 
+        -- toggle comment 
         z = {
-            name = "Zig", 
+            name = "Zig",
             f = {"<cmd>call zig#fmt#Format()<CR>", "Format Zig file"},
             b = {"<cmd>compiler zig_build_exe | make<CR>", "Build Zig file"},
             t = {"<cmd>compiler zig_test | make<CR>", "Test Zig file"},
             r = {"<cmd>!zig run %<CR>", "Run Zig file"},
             c = {"<cmd>!zig build<CR>", "Zig build project"}
         },
-        ["/"] =  {"gcc", "Toggle Comment"},
+        ["/"] = {"gcc", "Toggle Comment"}
     },
     w = {
         name = "Window",
@@ -434,6 +434,11 @@ wk.register({
         qj = {"<C-w>j :q<CR> <C-w>l", "Close bottom window"},
         qk = {"<C-w>k :q<CR> <C-w>l", "Close top window"},
         ql = {"<C-w>l :q<CR> <C-w>l", "Close right window"}
+    },
+    b = {
+        f = {function()
+            require("telescope.builtin").buffers()
+        end, "Select buffer from list"}
     }
 }, {
     prefix = "<leader>"
@@ -468,7 +473,6 @@ vim.diagnostic.config({
     virtual_text = false, -- disables inline red text
     update_in_insert = false
 })
-
 
 vim.api.nvim_create_autocmd({"ModeChanged"}, {
     pattern = "*:[vV\x16]", -- entering visual modes
@@ -532,7 +536,6 @@ end, {
 --     desc = "Find word under cursor in current file"
 -- })
 
-
 vim.keymap.set("n", "<leader>rw", function()
     local word = vim.fn.expand("<cword>")
 
@@ -552,8 +555,6 @@ vim.keymap.set("n", "<leader>rw", function()
 end, {
     desc = "Replace word under cursor globally"
 })
-
-
 
 -- wk to buffer above current
 vim.keymap.set("n", "wk", "<C-w>k", {
@@ -595,21 +596,25 @@ vim.keymap.set("n", "w]", "%", {
 local telescope = require("telescope.builtin")
 
 vim.keymap.set("n", "<space><space>", function()
-  if vim.bo.filetype == "neo-tree" then
-    -- get node under cursor in Neo-tree
-    local state = require("neo-tree.sources.manager").get_state("filesystem")
-    local node = state.tree:get_node()
-    local path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
-    telescope.find_files({ cwd = path,
-        prompt_title = "Find files in " .. vim.fn.fnamemodify(path, ":t"),
-  })
-  else
-    -- fallback to LazyVim default (project root)
-    telescope.find_files({ cwd = require("lazyvim.util").root(),
-        prompt_title = "Find files in " .. vim.fn.fnamemodify(require("lazyvim.util").root(), ":t"),
-  })
-  end
-end, { desc = "Find files (smart: root or Neo-tree folder)" })
+    if vim.bo.filetype == "neo-tree" then
+        -- get node under cursor in Neo-tree
+        local state = require("neo-tree.sources.manager").get_state("filesystem")
+        local node = state.tree:get_node()
+        local path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
+        telescope.find_files({
+            cwd = path,
+            prompt_title = "Find files in " .. vim.fn.fnamemodify(path, ":t")
+        })
+    else
+        -- fallback to LazyVim default (project root)
+        telescope.find_files({
+            cwd = require("lazyvim.util").root(),
+            prompt_title = "Find files in " .. vim.fn.fnamemodify(require("lazyvim.util").root(), ":t")
+        })
+    end
+end, {
+    desc = "Find files (smart: root or Neo-tree folder)"
+})
 
 -- vg => select all 
 vim.keymap.set("n", "vg", "ggVG$", {
