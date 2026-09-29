@@ -36,7 +36,7 @@ return {
   
   -- Optional: Add Zig LSP support through mason.nvim
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, { "zls" }) -- Zig Language Server

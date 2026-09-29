@@ -13,8 +13,9 @@ vim.opt.foldenable = false
 vim.opt.visualbell = true
 vim.opt.errorbells = false
 vim.opt.belloff = "all"
--- vim.opt.number = true -- Show absolute line number (left gutter)
--- vim.opt.relativenumber = true -- Show relative line numbers
+vim.opt.number = true -- Show absolute number on current line
+vim.opt.relativenumber = true -- Show relative numbers on other lines
+
 -- vim.o.statuscolumn = "%s %l %r"
 
 vim.g.autoformat_enabled = false

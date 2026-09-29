@@ -11,7 +11,7 @@ return {
 
   -- this plugin will be loaded when pressing Alt+{h,j,k,l}
   {
-    "echasnovski/mini.move",
+    "nvim-mini/mini.move",
     keys = {
       { "<M-h>", mode = { "v", "n" } },
       { "<M-j>", mode = { "v", "n" } },

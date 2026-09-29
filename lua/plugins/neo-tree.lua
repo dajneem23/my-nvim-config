@@ -539,10 +539,9 @@ return { -- If you want neo-tree's file operations to work with LSP (updating im
                     vim.api.nvim_set_current_win(neo_tree_win) -- focus neo-tree
                 end
             else
-                require("nvim-tree.api").tree.focus() -- jump to tree
-                -- if neo-tree is not open, open it
+                -- if neo-tree is not open, open and focus it
                 require("neo-tree.command").execute({
-                    toggle = true,
+                    action = "focus",
                     dir = vim.fn.expand("%:p:h")
                 })
             end

@@ -133,9 +133,8 @@ return
                 -- disable tsserver
                 return true
             end,
-            ts_ls = function()
-                capabilities = require("cmp_nvim_lsp").default_capabilities()
-                -- return true
+            ts_ls = function(_, opts)
+                opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
             end,
 
             vtsls = function(_, opts)
@@ -194,4 +193,3 @@ return
         }
     }
 }
-

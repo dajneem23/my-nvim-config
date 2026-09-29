@@ -79,6 +79,38 @@ return {
                 }
             }
         },
+        routes = {
+            {
+                filter = {
+                    event = "msg_show",
+                    kind = "wmsg",
+                },
+                opts = { skip = true },
+            },
+            {
+                filter = {
+                    event = "msg_show",
+                    any = {
+                        { find = "search hit BOTTOM" },
+                        { find = "search hit TOP" },
+                        { find = "E486" },
+                        { find = "No references found" },
+                        { find = "no references" },
+                    },
+                },
+                opts = { skip = true },
+            },
+            {
+                filter = {
+                    event = "notify",
+                    any = {
+                        { find = "No references found" },
+                        { find = "no references" },
+                    },
+                },
+                opts = { skip = true },
+            },
+        },
         -- you can enable a preset for easier configuration
         presets = {
             bottom_search = true, -- use a classic bottom cmdline for search

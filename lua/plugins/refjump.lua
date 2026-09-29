@@ -4,8 +4,8 @@ return {
     opts = {
         keymaps = {
             enable = true,
-            next = 'n', -- Keymap to jump to next LSP reference
-            prev = 'N' -- Keymap to jump to previous LSP reference
+            next = ']r', -- Keymap to jump to next LSP reference
+            prev = '[r' -- Keymap to jump to previous LSP reference
         },
         highlights = {
             enable = true, -- Highlight the LSP references on jump
