@@ -96,9 +96,6 @@ end
 
 
 require "lazy_setup"
-require "polish"
-
-
 require("user.keymaps")
 
 
@@ -118,7 +115,6 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     command = "setlocal formatoptions-=cro"
 })
-
 
 
 
