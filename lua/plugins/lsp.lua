@@ -21,6 +21,25 @@ return {
       -- - comment banner
       -- - etc
     },
+    init = function()
+      -- Neovim 0.12 provides `:lsp`, so nvim-lspconfig no longer defines this
+      -- compatibility alias itself.
+      if vim.fn.exists(":lsp") == 2 and vim.fn.exists(":LspInfo") == 0 then
+        vim.api.nvim_create_user_command("LspInfo", function()
+          vim.cmd("checkhealth vim.lsp")
+        end, { desc = "Show Neovim LSP health" })
+      end
+
+      local lsp_keymaps = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = lsp_keymaps,
+        callback = function(args)
+          local opts = { buffer = args.buf, silent = true }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+        end,
+      })
+    end,
     opts = {
         diagnostics = {
             virtual_text = {
@@ -128,6 +147,19 @@ return {
                             -- }
                 }
             }
+        })
+
+        lspconfig.basedpyright.setup({
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
+            settings = {
+                basedpyright = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        diagnosticMode = "openFilesOnly",
+                        useLibraryCodeForTypes = true,
+                    },
+                },
+            },
         })
     end
 }, {

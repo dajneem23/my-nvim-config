@@ -174,6 +174,7 @@ Here is a list of the main plugins used in this configuration:
 | Telescope prompt | I | `<A-i>` / `<A-h>` | Find files ignoring `.gitignore` / include hidden files |
 | Telescope prompt | I | `<C-Down>` / `<C-Up>` | Next / previous prompt history item |
 | Telescope prompt | N | `q` | Close the picker |
+| Normal mode | N | `<M-h>` | Move the current line left |
 | Visual selection | V | `<M-h>` / `<M-j>` / `<M-k>` / `<M-l>` | Move the selection left / down / up / right |
 
 ### Neo-tree buffer mappings configured here
